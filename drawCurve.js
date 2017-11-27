@@ -15,6 +15,7 @@ function drawCatalogCurve(divId, details, mode) {
   var EQ = [];
   var legend = ['Head', 'HP', 'Eff'];
   var axisName = [];
+  var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
   if (50 == details.frequency) {
     axisName['FLOW'] = 'Flow (Cubic Meter per Day)';
     axisName['HEAD'] = 'Head (Meter)';
@@ -26,7 +27,7 @@ function drawCatalogCurve(divId, details, mode) {
   }
 
 
-  for (var i = 0.0; i < details.espPoints.domain_Q; i += ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1))) {
+  for (var i = 0.0; i < details.espPoints.domain_Q; i += flowStep) {
     var valueH = 0;
     var valueP = 0;
     var valueE = 0;
@@ -84,7 +85,7 @@ function drawCatalogCurve(divId, details, mode) {
         },
         saveAsImage: {
           show: true,
-          name: 'Catalog Curve for ' + details.stage
+          name: details.stage + '_' + details.frequency + 'Hz_Catalog'//'Catalog Curve for ' + details.stage + ' ' + details.frequency + 'Hz'
         }
       }
     },
@@ -304,6 +305,12 @@ function drawTornadoCurve(divId, details, mode) {
   var dataMax = [];
   var legend = ['70 Hz', '65 Hz', '60 Hz', '55 Hz', '50 Hz', '45 Hz', '40 Hz', '35 Hz', '30 Hz'];
   var axisName = [];
+  var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
+
+  console.log(details.unitX);
+  console.log(flowStep);
+  console.log(details.unitX/flowStep);
+
   if (50 == details.frequency) {
     axisName['FLOW'] = 'Flow (Cubic Meter per Day)';
     axisName['HEAD'] = 'Head (Meter)';
@@ -324,7 +331,7 @@ function drawTornadoCurve(divId, details, mode) {
     }
 
     if (hz >= 30 && hz <= 70) {
-      for (var q = 0; q < details.espPoints.domain_Q * k; q++) {
+      for (var q = 0; q < details.espPoints.domain_Q * k; q+=flowStep) {
         value = getValueAtPoint(q, coeHQk);
         data[hz].push([q, value]);
       }
@@ -334,7 +341,7 @@ function drawTornadoCurve(divId, details, mode) {
     dataBep.push([details.espPoints.BEP_Q * k, getValueAtPoint(details.espPoints.BEP_Q * k, coeHQk)]);
     dataMax.push([details.espPoints.BEA_End * k, getValueAtPoint(details.espPoints.BEA_End * k, coeHQk)]);
   }
-
+  //console.log(data[65]);
 
   option = {
     graphic: { // Position the image at the bottom center of its container.
@@ -375,7 +382,7 @@ function drawTornadoCurve(divId, details, mode) {
         },
         saveAsImage: {
           show: true,
-          name: 'Tornado Curve For ' + details.stage
+          name: details.stage + '_Tornado'//'Tornado Curve For ' + details.stage
         }
       }
     },
@@ -395,14 +402,19 @@ function drawTornadoCurve(divId, details, mode) {
       name: axisName.FLOW,
       nameGap: 25,
       nameLocation: 'middle',
-      splitNumber: 20,
-      max: parseFloat(details.lengthOfX) * (70 / parseInt(details.frequency))
+      //splitNumber: 20,
+      min: 0,
+      max: Math.floor(parseFloat(details.lengthOfX) * (70 / parseInt(details.frequency)) / parseInt(details.unitX)) * parseInt(details.unitX),
+      interval: parseFloat(details.unitX),
+      splitNumber: parseFloat(details.numOfUnitX)
+
     },
     yAxis: {
       type: 'value',
       name: axisName.HEAD,
       nameLocation: 'end',
-      splitNumber: 10
+      splitNumber: 10,
+      min: 0
     },
     series: [{
         name: legend[0],
@@ -421,7 +433,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[70][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -455,7 +467,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[65][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -489,7 +501,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[60][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -523,7 +535,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[55][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -557,7 +569,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[50][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -591,7 +603,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[45][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -625,7 +637,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[40][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -659,7 +671,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[35][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -693,7 +705,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 35,
           symbolOffset: [0, 0],
           data: [{
-            type: 'max'
+            coord: data[30][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -842,6 +854,7 @@ function drawStageVerification(divId, details, mode) {
   var testPoints2 = [];
   var legend = [];
   var axisName = [];
+  var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
   if (50 == details.frequency) {
     axisName['FLOW'] = 'Flow (Cubic Meter per Day)';
     axisName['HEAD'] = 'Head (Meter)';
@@ -872,7 +885,7 @@ function drawStageVerification(divId, details, mode) {
   }
 
   if ('EFF' === mode) {
-    for (var i = details.espPoints.BEA_Start; i <= details.espPoints.BEA_End; i += 1) {
+    for (var i = details.espPoints.BEA_Start; i <= details.espPoints.BEA_End; i += flowStep) {
       var valueT = 0;
       var valueTh = 0;
       var valueTp = 0;
@@ -906,7 +919,7 @@ function drawStageVerification(divId, details, mode) {
     legend = ['Catalog Curve', 'Lower Limit', 'Test Curve', 'Test Curve2'];
 
   } else {
-    for (var i = 0.0; i < details.espPoints.domain_Q; i += 1) {
+    for (var i = 0.0; i < details.espPoints.domain_Q; i += flowStep) {
       var valueT = 0;
       var valueT2 = 0;
       var valueC = 0;
@@ -1014,14 +1027,20 @@ function drawStageVerification(divId, details, mode) {
       name: axisName.FLOW,
       nameGap: 25,
       nameLocation: 'middle',
-      splitNumber: 20,
-      max: parseFloat(details.lengthOfX)
+      //splitNumber: 20,
+      min: 0,
+      max: parseFloat(details.lengthOfX),
+      interval: parseFloat(details.unitX),
+      splitNumber: parseFloat(details.numOfUnitX)
     },
     yAxis: {
       type: 'value',
       name: ('HEAD' === mode ? axisName.HEAD : ('POWER' === mode ? axisName.POWER : 'EFF' === mode ? 'Eff (%)' : 'Error yAxis')),
       nameLocation: 'end',
-      splitNumber: 10
+      //splitNumber: 10,
+      min: 0,
+      interval: parseFloat(details.unitY1),
+      splitNumber: parseFloat(details.numOfUnitY)
       // axisLine: {
       //   lineStyle: {
       //     color: ('HEAD' === mode ? 'blue' : ('POWER' === mode ? 'red' : 'EFF' === mode ? 'green' : 'black'))
