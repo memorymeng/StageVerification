@@ -175,7 +175,12 @@ function drawCatalogCurve(divId, details, mode) {
         yAxisIndex: 0,
         smooth: true,
         showSymbol: false,
-        data: HQ
+        data: HQ,
+        lineStyle: {
+          normal: {
+            color: colors[0]
+          }
+        }
       },
       {
         name: 'HP',
@@ -184,7 +189,12 @@ function drawCatalogCurve(divId, details, mode) {
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
-        data: PQ
+        data: PQ,
+        lineStyle: {
+          normal: {
+            color: colors[1]
+          }
+        }
       },
       {
         name: 'Eff',
@@ -193,7 +203,12 @@ function drawCatalogCurve(divId, details, mode) {
         yAxisIndex: 2,
         smooth: true,
         showSymbol: false,
-        data: EQ
+        data: EQ,
+        lineStyle: {
+          normal: {
+            color: colors[2]
+          }
+        }
       },
       {
         name: 'BEA & BEP',
@@ -289,7 +304,7 @@ function drawTornadoCurve(divId, details, mode) {
   else
     myChart = echarts.init(document.getElementById(divId));
   var option = new Object();
-  var colors = ['blue', 'red', 'black'];
+  var colors = ['blue', 'green', 'gray'];
   var data = Object();
   data[30] = [];
   data[35] = [];
@@ -414,7 +429,12 @@ function drawTornadoCurve(divId, details, mode) {
       name: axisName.HEAD,
       nameLocation: 'end',
       splitNumber: 10,
-      min: 0
+      min: 0,
+      axisLine: {
+        lineStyle: {
+          color: 'blue'
+        }
+      }
     },
     series: [{
         name: legend[0],
@@ -424,6 +444,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            width: 0.5,
             color: colors[0]
           }
         },
@@ -458,6 +479,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            width: 0.5,
             color: colors[0]
           }
         },
@@ -492,6 +514,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            //width: 0.5,
             color: colors[1]
           }
         },
@@ -526,6 +549,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            width: 0.5,
             color: colors[0]
           }
         },
@@ -560,6 +584,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            //width: 0.5,
             color: colors[1]
           }
         },
@@ -594,6 +619,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            width: 0.5,
             color: colors[0]
           }
         },
@@ -628,6 +654,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            width: 0.5,
             color: colors[0]
           }
         },
@@ -662,6 +689,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            width: 0.5,
             color: colors[0]
           }
         },
@@ -696,6 +724,7 @@ function drawTornadoCurve(divId, details, mode) {
         symbolSize: 1,
         lineStyle: {
           normal: {
+            width: 0.5,
             color: colors[0]
           }
         },

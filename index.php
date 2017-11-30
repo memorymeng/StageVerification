@@ -841,7 +841,7 @@
 
   <!-- <div id = 'canvas'><div><br /> -->
   <!-- A4 210 x 297 -> 840 x 1188 -->
-  <div id='canvas' style="width: 1200px;height:600px;"></div><br />
+  <div id='canvas' style="width: 1200px;height:700px;"></div><br />
 
   Series : <select value='Series' name='series' id='series'>
       <?php
