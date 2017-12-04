@@ -322,9 +322,9 @@ function drawTornadoCurve(divId, details, mode) {
   var axisName = [];
   var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
 
-  console.log(details.unitX);
-  console.log(flowStep);
-  console.log(details.unitX/flowStep);
+  // console.log(details.unitX);
+  // console.log(flowStep);
+  // console.log(details.unitX/flowStep);
 
   if (50 == details.frequency) {
     axisName['FLOW'] = 'Flow (Cubic Meter per Day)';
@@ -462,11 +462,13 @@ function drawTornadoCurve(divId, details, mode) {
               position: 'inside',
               formatter: '{a}',
               color: 'auto'
+              //backgroundColor:'blue'
+              //backgroundColor: 'transparent'
             }
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(0,0,255, 0.5)'
             }
           }
         }
@@ -501,7 +503,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(0,0,255, 0.5)'
             }
           }
         }
@@ -536,7 +538,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(139, 0, 0, 0.8)'
             }
           }
         }
@@ -571,7 +573,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(0,0,255, 0.5)'
             }
           }
         }
@@ -606,7 +608,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(139, 0, 0, 0.8)'
             }
           }
         }
@@ -641,7 +643,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(0,0,255, 0.5)'
             }
           }
         }
@@ -676,7 +678,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(0,0,255, 0.5)'
             }
           }
         }
@@ -711,7 +713,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(0,0,255, 0.5)'
             }
           }
         }
@@ -746,7 +748,7 @@ function drawTornadoCurve(divId, details, mode) {
           },
           itemStyle: {
             normal: {
-              //color: 'white'
+              color: 'rgba(0,0,255, 0.5)'
             }
           }
         }
@@ -765,27 +767,27 @@ function drawTornadoCurve(divId, details, mode) {
           }
         },
         data: dataMin,
-        markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 40,
-          symbolOffset: [0, 0],
-          data: [{
-            type: 'max'
-          }],
-          label: {
-            normal: {
-              show: true,
-              position: 'inside',
-              formatter: '{a}',
-              color: 'auto'
-            }
-          },
-          itemStyle: {
-            normal: {
-              //color: 'white'
-            }
-          }
-        }
+        // markPoint: {
+        //   symbol: 'roundRect',
+        //   symbolSize: 40,
+        //   symbolOffset: [0, 0],
+        //   data: [{
+        //     type: 'max'
+        //   }],
+        //   label: {
+        //     normal: {
+        //       show: true,
+        //       position: 'inside',
+        //       formatter: '{a}',
+        //       color: 'auto'
+        //     }
+        //   },
+        //   itemStyle: {
+        //     normal: {
+        //       //color: 'white'
+        //     }
+        //   }
+        // }
       },
       {
         name: 'bep',
@@ -801,27 +803,27 @@ function drawTornadoCurve(divId, details, mode) {
           }
         },
         data: dataBep,
-        markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 40,
-          symbolOffset: [0, 0],
-          data: [{
-            type: 'max'
-          }],
-          label: {
-            normal: {
-              show: true,
-              position: 'inside',
-              formatter: '{a}',
-              color: 'auto'
-            }
-          },
-          itemStyle: {
-            normal: {
-              //color: 'white'
-            }
-          }
-        }
+        // markPoint: {
+        //   symbol: 'roundRect',
+        //   symbolSize: 40,
+        //   symbolOffset: [0, 0],
+        //   data: [{
+        //     type: 'max'
+        //   }],
+        //   label: {
+        //     normal: {
+        //       show: true,
+        //       position: 'inside',
+        //       formatter: '{a}',
+        //       color: 'auto'
+        //     }
+        //   },
+        //   itemStyle: {
+        //     normal: {
+        //       //color: 'white'
+        //     }
+        //   }
+        // }
       },
       {
         name: 'max',
@@ -837,27 +839,27 @@ function drawTornadoCurve(divId, details, mode) {
           }
         },
         data: dataMax,
-        markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 40,
-          symbolOffset: [0, 0],
-          data: [{
-            type: 'max'
-          }],
-          label: {
-            normal: {
-              show: true,
-              position: 'inside',
-              formatter: '{a}',
-              color: 'auto'
-            }
-          },
-          itemStyle: {
-            normal: {
-              //color: 'white'
-            }
-          }
-        }
+        // markPoint: {
+        //   symbol: 'roundRect',
+        //   symbolSize: 40,
+        //   symbolOffset: [0, 0],
+        //   data: [{
+        //     type: 'max'
+        //   }],
+        //   label: {
+        //     normal: {
+        //       show: true,
+        //       position: 'inside',
+        //       formatter: '{a}',
+        //       color: 'auto'
+        //     }
+        //   },
+        //   itemStyle: {
+        //     normal: {
+        //       //color: 'white'
+        //     }
+        //   }
+        // }
       },
     ]
 
