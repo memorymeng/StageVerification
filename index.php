@@ -12,7 +12,7 @@
     <script src="./framework/jquery-3.2.1.js"></script>
     <script src="./framework/jquery-ui-1.12.1/jquery-ui.js"></script>
 
-    <script src='./framework/echarts.js'></script>
+    <script src='./framework/echarts v3.8.5.js'></script>
     <script src='./drawCurve.js?random=<?php echo filemtime('./drawCurve.js'); ?>'></script>
     <style type="text/css">
 

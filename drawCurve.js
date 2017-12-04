@@ -100,12 +100,13 @@ function drawCatalogCurve(divId, details, mode) {
       top: '15%',
       right: '16%'
     },
-    xAxis: [{ //invisible x axis at top just to skip the eCharts bug
-        type: 'category',
-        name: 'for skip bug only',
-        position: 'top',
-        show: false
-      },
+    xAxis: [
+      // { //invisible x axis at top just to skip the eCharts bug
+      //   type: 'category',
+      //   name: 'for skip bug only',
+      //   position: 'top',
+      //   show: false
+      // },
       {
         type: 'value',
         name: axisName.FLOW,
@@ -147,6 +148,7 @@ function drawCatalogCurve(divId, details, mode) {
         splitNumber: parseFloat(details.numOfUnitY),
         position: 'right',
         axisLine: {
+          onZero: false,
           lineStyle: {
             color: colors[1]
           }
@@ -162,6 +164,7 @@ function drawCatalogCurve(divId, details, mode) {
         position: 'right',
         offset: 80,
         axisLine: {
+          onZero: false,
           lineStyle: {
             color: colors[2]
           }
@@ -171,7 +174,7 @@ function drawCatalogCurve(divId, details, mode) {
     series: [{
         name: 'Head',
         type: 'line',
-        xAxisIndex: 1,
+        xAxisIndex: 0,
         yAxisIndex: 0,
         smooth: true,
         showSymbol: false,
@@ -185,7 +188,7 @@ function drawCatalogCurve(divId, details, mode) {
       {
         name: 'HP',
         type: 'line',
-        xAxisIndex: 1,
+        xAxisIndex: 0,
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
@@ -199,7 +202,7 @@ function drawCatalogCurve(divId, details, mode) {
       {
         name: 'Eff',
         type: 'line',
-        xAxisIndex: 1,
+        xAxisIndex: 0,
         yAxisIndex: 2,
         smooth: true,
         showSymbol: false,
@@ -214,7 +217,7 @@ function drawCatalogCurve(divId, details, mode) {
         name: 'BEA & BEP',
         type: 'line',
         silent: true,
-        xAxisIndex: 1,
+        xAxisIndex: 0,
         yAxisIndex: 0,
         smooth: true,
         markArea: {
@@ -318,7 +321,8 @@ function drawTornadoCurve(divId, details, mode) {
   var dataMin = [];
   var dataBep = [];
   var dataMax = [];
-  var legend = ['70 Hz', '65 Hz', '60 Hz', '55 Hz', '50 Hz', '45 Hz', '40 Hz', '35 Hz', '30 Hz'];
+  //var legend = ['70 Hz', '65 Hz', '60 Hz', '55 Hz', '50 Hz', '45 Hz', '40 Hz', '35 Hz', '30 Hz'];
+  var legend = ['70Hz', '65Hz', '60Hz', '55Hz', '50Hz', '45Hz', '40Hz', '35Hz', '30Hz'];
   var axisName = [];
   var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
 
@@ -450,8 +454,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[70],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[70][details.unitX/flowStep]
@@ -461,14 +465,16 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'blue',
+              //fontWeight: 'bold',
+              fontSize: 20
               //backgroundColor:'blue'
               //backgroundColor: 'transparent'
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(0,0,255, 0.5)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -487,8 +493,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[65],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[65][details.unitX/flowStep]
@@ -498,12 +504,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'blue',
+              //fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(0,0,255, 0.5)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -522,8 +530,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[60],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[60][details.unitX/flowStep]
@@ -533,12 +541,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'red',
+              fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(139, 0, 0, 0.8)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -557,8 +567,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[55],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[55][details.unitX/flowStep]
@@ -568,12 +578,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'blue',
+              //fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(0,0,255, 0.5)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -592,8 +604,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[50],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[50][details.unitX/flowStep]
@@ -603,12 +615,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'red',
+              fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(139, 0, 0, 0.8)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -627,8 +641,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[45],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[45][details.unitX/flowStep]
@@ -638,12 +652,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'blue',
+              //fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(0,0,255, 0.5)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -662,8 +678,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[40],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[40][details.unitX/flowStep]
@@ -673,12 +689,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'blue',
+              //fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(0,0,255, 0.5)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -697,8 +715,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[35],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[35][details.unitX/flowStep]
@@ -708,12 +726,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'blue',
+              //fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(0,0,255, 0.5)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -732,8 +752,8 @@ function drawTornadoCurve(divId, details, mode) {
         },
         data: data[30],
         markPoint: {
-          symbol: 'roundRect',
-          symbolSize: 35,
+          symbol: 'pin',
+          symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
             coord: data[30][details.unitX/flowStep]
@@ -743,12 +763,14 @@ function drawTornadoCurve(divId, details, mode) {
               show: true,
               position: 'inside',
               formatter: '{a}',
-              color: 'auto'
+              color: 'blue',
+              //fontWeight: 'bold',
+              fontSize: 20
             }
           },
           itemStyle: {
             normal: {
-              color: 'rgba(0,0,255, 0.5)'
+              color: 'rgba(0, 0, 0, 0)'
             }
           }
         }
@@ -767,27 +789,29 @@ function drawTornadoCurve(divId, details, mode) {
           }
         },
         data: dataMin,
-        // markPoint: {
-        //   symbol: 'roundRect',
-        //   symbolSize: 40,
-        //   symbolOffset: [0, 0],
-        //   data: [{
-        //     type: 'max'
-        //   }],
-        //   label: {
-        //     normal: {
-        //       show: true,
-        //       position: 'inside',
-        //       formatter: '{a}',
-        //       color: 'auto'
-        //     }
-        //   },
-        //   itemStyle: {
-        //     normal: {
-        //       //color: 'white'
-        //     }
-        //   }
-        // }
+        markPoint: {
+          symbol: 'pin',
+          symbolSize: 20,
+          symbolOffset: [0, 0],
+          data: [{
+            type: 'max'
+          }],
+          label: {
+            normal: {
+              show: true,
+              position: 'inside',
+              formatter: '{a}',
+              color: 'grey',
+              //fontWeight: 'bold',
+              fontSize: 20
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: 'rgba(0, 0, 0, 0)'
+            }
+          }
+        }
       },
       {
         name: 'bep',
@@ -803,27 +827,29 @@ function drawTornadoCurve(divId, details, mode) {
           }
         },
         data: dataBep,
-        // markPoint: {
-        //   symbol: 'roundRect',
-        //   symbolSize: 40,
-        //   symbolOffset: [0, 0],
-        //   data: [{
-        //     type: 'max'
-        //   }],
-        //   label: {
-        //     normal: {
-        //       show: true,
-        //       position: 'inside',
-        //       formatter: '{a}',
-        //       color: 'auto'
-        //     }
-        //   },
-        //   itemStyle: {
-        //     normal: {
-        //       //color: 'white'
-        //     }
-        //   }
-        // }
+        markPoint: {
+          symbol: 'pin',
+          symbolSize: 20,
+          symbolOffset: [0, 0],
+          data: [{
+            type: 'max'
+          }],
+          label: {
+            normal: {
+              show: true,
+              position: 'inside',
+              formatter: '{a}',
+              color: 'grey',
+              //fontWeight: 'bold',
+              fontSize: 20
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: 'rgba(0, 0, 0, 0)'
+            }
+          }
+        }
       },
       {
         name: 'max',
@@ -839,27 +865,29 @@ function drawTornadoCurve(divId, details, mode) {
           }
         },
         data: dataMax,
-        // markPoint: {
-        //   symbol: 'roundRect',
-        //   symbolSize: 40,
-        //   symbolOffset: [0, 0],
-        //   data: [{
-        //     type: 'max'
-        //   }],
-        //   label: {
-        //     normal: {
-        //       show: true,
-        //       position: 'inside',
-        //       formatter: '{a}',
-        //       color: 'auto'
-        //     }
-        //   },
-        //   itemStyle: {
-        //     normal: {
-        //       //color: 'white'
-        //     }
-        //   }
-        // }
+        markPoint: {
+          symbol: 'pin',
+          symbolSize: 20,
+          symbolOffset: [0, 0],
+          data: [{
+            type: 'max'
+          }],
+          label: {
+            normal: {
+              show: true,
+              position: 'inside',
+              formatter: '{a}',
+              color: 'grey',
+              //fontWeight: 'bold',
+              fontSize: 20
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: 'rgba(0, 0, 0, 0)'
+            }
+          }
+        }
       },
     ]
 
