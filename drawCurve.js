@@ -345,7 +345,7 @@ function drawTornadoCurve(divId, details, mode) {
     var value = 0;
     var k = hz / parseInt(details.frequency);
     var coeHQk = [];
-    for (n = 0; n < parseInt(details.powN) + 1; n++) {
+    for (var n = 0; n < parseInt(details.powN) + 1; n++) {
       coeHQk[n] = details.coeHQ[n] * Math.pow(k, 2 - n);
     }
 
@@ -361,6 +361,8 @@ function drawTornadoCurve(divId, details, mode) {
     dataMax.push([details.espPoints.BEA_End * k, getValueAtPoint(details.espPoints.BEA_End * k, coeHQk)]);
   }
   //console.log(data[65]);
+
+
 
   option = {
     graphic: { // Position the image at the bottom center of its container.
@@ -458,7 +460,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[70][details.unitX/flowStep]
+            coord: getBepCoordForFreq(70)//data[70][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -467,7 +469,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'blue',
               //fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-10]
               //backgroundColor:'blue'
               //backgroundColor: 'transparent'
             }
@@ -497,7 +500,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[65][details.unitX/flowStep]
+            coord: getBepCoordForFreq(65)//data[65][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -506,7 +509,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'blue',
               //fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-10]
             }
           },
           itemStyle: {
@@ -534,7 +538,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[60][details.unitX/flowStep]
+            coord: getBepCoordForFreq(60)//data[60][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -543,7 +547,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'red',
               fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-10]
             }
           },
           itemStyle: {
@@ -571,7 +576,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[55][details.unitX/flowStep]
+            coord: getBepCoordForFreq(55)//data[55][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -580,7 +585,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'blue',
               //fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-10]
             }
           },
           itemStyle: {
@@ -608,7 +614,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[50][details.unitX/flowStep]
+            coord: getBepCoordForFreq(50)//data[50][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -617,7 +623,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'red',
               fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-10]
             }
           },
           itemStyle: {
@@ -645,7 +652,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[45][details.unitX/flowStep]
+            coord: getBepCoordForFreq(45)//data[45][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -654,7 +661,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'blue',
               //fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-10]
             }
           },
           itemStyle: {
@@ -682,7 +690,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[40][details.unitX/flowStep]
+            coord: getBepCoordForFreq(40)//data[40][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -691,7 +699,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'blue',
               //fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-5]
             }
           },
           itemStyle: {
@@ -719,7 +728,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[35][details.unitX/flowStep]
+            coord: getBepCoordForFreq(35)//data[35][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -728,7 +737,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'blue',
               //fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,-2]
             }
           },
           itemStyle: {
@@ -756,7 +766,7 @@ function drawTornadoCurve(divId, details, mode) {
           symbolSize: 30,
           symbolOffset: [0, 0],
           data: [{
-            coord: data[30][details.unitX/flowStep]
+            coord: getBepCoordForFreq(30)//data[30][details.unitX/flowStep]
           }],
           label: {
             normal: {
@@ -765,7 +775,8 @@ function drawTornadoCurve(divId, details, mode) {
               formatter: '{a}',
               color: 'blue',
               //fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 14,
+              offset: [-10,0]
             }
           },
           itemStyle: {
@@ -893,6 +904,9 @@ function drawTornadoCurve(divId, details, mode) {
 
   };
 
+
+
+  //console.log(option);
   myChart.setOption(option);
 }
 
@@ -1324,6 +1338,19 @@ function getValueAtPoint(flowPoint, withCoe) {
   } else {
     return 0; //error, coe not set yet
   }
+}
+
+function getBepCoordForFreq(freq) {
+  var k = freq / parseInt(details.frequency);
+  var coeHQk = [];
+  for (var n = 0; n < parseInt(details.powN) + 1; n++) {
+    coeHQk[n] = details.coeHQ[n] * Math.pow(k, 2 - n);
+  }
+
+  var x = details.espPoints.BEP_Q * k;
+  var y = getValueAtPoint(details.espPoints.BEP_Q * k, coeHQk);
+
+  return [x,y];
 }
 
 function isset() {
