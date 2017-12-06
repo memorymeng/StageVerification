@@ -867,11 +867,11 @@
       ?>
   </select><br/>
 
-  <button name="Draw Catalog" id="CATALOG" onclick="preDrawImages('CATALOG')">Draw Catalog</button>
-  <button name="Draw Tornado Curve" id="Tornado" onclick="preDrawImages('TORNADO')">Draw Tornado Curve</button>
-  <button name="Verify HEAD" id="HEAD" onclick="preDrawImages('HEAD')" hidden>Verify HEAD</button>
-  <button name="Verify POWER" id="POWER" onclick="preDrawImages('POWER')" hidden>Verify POWER</button>
-  <button name="Verify EFF" id="EFF" onclick="preDrawImages('EFF')" hidden>Verify EFF</button>
+  <button name="Draw Catalog" id="CATALOG" onclick="preDrawImages('CATALOG')" accesskey="1">Draw Catalog</button>
+  <button name="Draw Tornado Curve" id="Tornado" onclick="preDrawImages('TORNADO')" accesskey="2">Draw Tornado Curve</button>
+  <button name="Verify HEAD" id="HEAD" onclick="preDrawImages('HEAD')" accesskey="3" hidden>Verify HEAD</button>
+  <button name="Verify POWER" id="POWER" onclick="preDrawImages('POWER')" accesskey="4" hidden>Verify POWER</button>
+  <button name="Verify EFF" id="EFF" onclick="preDrawImages('EFF')" accesskey="5" hidden>Verify EFF</button>
   <button name="Toggle Input Table" id="ToggleInputTable" onclick="toggleInputTable()" hidden>Toggle Input Table</button><br />
   <br />
 
@@ -898,9 +898,13 @@
   <hr>
   <div id="excelTable"></div><br />
   <div id="excelTable2"></div>
+  <button name="save" onClick="saveEChartImage('canvas')" accesskey="s" hidden>saveImage</button>
 </body>
 </html>
 <script>
+
+
+
 function isset() {
   // discuss at: http://phpjs.org/functions/isset
   // +   original by: Kevin van     Zonneveld (http://kevin.vanzonneveld.net)

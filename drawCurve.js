@@ -1,6 +1,8 @@
 var BPD_TO_M3PD = 1 / 6.29;
 var FEET_TO_METER = 0.3048;
 var HP_TO_KW = 0.745699872;
+var imageFileName = 'null';
+var displayLegend = false;
 
 function drawCatalogCurve(divId, details, mode) {
   var myChart = echarts.getInstanceByDom(document.getElementById(divId));
@@ -16,6 +18,8 @@ function drawCatalogCurve(divId, details, mode) {
   var legend = ['Head', 'HP', 'Eff'];
   var axisName = [];
   var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
+  imageFileName = details.stage + '_Catalog_' + details.frequency + 'Hz';
+
   if (50 == details.frequency) {
     axisName['FLOW'] = 'Flow (Cubic Meter per Day)';
     axisName['HEAD'] = 'Head (Meter)';
@@ -85,11 +89,12 @@ function drawCatalogCurve(divId, details, mode) {
         },
         saveAsImage: {
           show: true,
-          name: details.stage + '_' + details.frequency + 'Hz_Catalog'//'Catalog Curve for ' + details.stage + ' ' + details.frequency + 'Hz'
+          name: details.stage + '_Catalog_' + details.frequency + 'Hz'//'Catalog Curve for ' + details.stage + ' ' + details.frequency + 'Hz'
         }
       }
     },
     legend: {
+      show: displayLegend,
       top: 'center',
       orient: 'vertical',
       left: 'right',
@@ -98,7 +103,7 @@ function drawCatalogCurve(divId, details, mode) {
     },
     grid: {
       top: '15%',
-      right: '16%'
+      right: (displayLegend)?'16%':'14%'
     },
     xAxis: [
       // { //invisible x axis at top just to skip the eCharts bug
@@ -297,6 +302,7 @@ function drawCatalogCurve(divId, details, mode) {
     ]
   };
 
+
   myChart.setOption(option);
 }
 
@@ -325,7 +331,7 @@ function drawTornadoCurve(divId, details, mode) {
   var legend = ['70Hz', '65Hz', '60Hz', '55Hz', '50Hz', '45Hz', '40Hz', '35Hz', '30Hz'];
   var axisName = [];
   var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
-
+  imageFileName = details.stage + '_Tornado_' + ((details.frequency == 50)?'Matrix':((details.frequency == 60)?'Imperial':'error'));
   // console.log(details.unitX);
   // console.log(flowStep);
   // console.log(details.unitX/flowStep);
@@ -403,11 +409,12 @@ function drawTornadoCurve(divId, details, mode) {
         },
         saveAsImage: {
           show: true,
-          name: details.stage + '_Tornado'//'Tornado Curve For ' + details.stage
+          name: details.stage + '_Tornado_' + ((details.frequency == 50)?'Matrix':((details.frequency == 60)?'Imperial':'error'))//'Tornado Curve For ' + details.stage
         }
       }
     },
     legend: {
+      show: displayLegend,
       top: 'center',
       orient: 'vertical',
       left: 'right',
@@ -416,7 +423,7 @@ function drawTornadoCurve(divId, details, mode) {
     },
     grid: {
       top: '15%',
-      right: '12%'
+      right: (displayLegend)?'12%':'10%'
     },
     xAxis: {
       type: 'value',
@@ -1252,6 +1259,8 @@ function drawStageVerification(divId, details, mode) {
 
   };
 
+
+
   myChart.setOption(option);
 }
 
@@ -1351,6 +1360,18 @@ function getBepCoordForFreq(freq) {
   var y = getValueAtPoint(details.espPoints.BEP_Q * k, coeHQk);
 
   return [x,y];
+}
+
+function saveEChartImage(divId) {
+  var myChart = echarts.getInstanceByDom(document.getElementById(divId));
+  var link = document.createElement("a");
+  link.setAttribute("href", myChart.getDataURL({
+    pixelRatio: 1,
+    backgroundColor: '#fff',
+    excludeComponents: ['toolbox']
+}));
+  link.setAttribute("download", imageFileName);
+  link.click();
 }
 
 function isset() {
