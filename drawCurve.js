@@ -332,6 +332,16 @@ function drawTornadoCurve(divId, details, mode) {
   var axisName = [];
   var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
   imageFileName = details.stage + '_Tornado_' + ((details.frequency == 50)?'Matrix':((details.frequency == 60)?'Imperial':'error'));
+  var numOfUnitXTornado = parseInt(details.numOfUnitX);
+  var unitXTornado = parseInt(details.unitX);
+  {//adjust unit step for 70 hz curve
+    var k = 70 / parseInt(details.frequency);
+    numOfUnitXTornado = Math.ceil(numOfUnitXTornado*k)
+    if (numOfUnitXTornado > 20) {
+      numOfUnitXTornado = Math.ceil(numOfUnitXTornado/2);
+      unitXTornado *= 2;
+    }
+  }
   // console.log(details.unitX);
   // console.log(flowStep);
   // console.log(details.unitX/flowStep);
@@ -345,6 +355,7 @@ function drawTornadoCurve(divId, details, mode) {
     axisName['HEAD'] = 'Head (ft)';
     axisName['POWER'] = 'HP';
   }
+
 
 
   for (var hz = 0; hz <= 75; hz += 5) {
@@ -432,9 +443,9 @@ function drawTornadoCurve(divId, details, mode) {
       nameLocation: 'middle',
       //splitNumber: 20,
       min: 0,
-      max: Math.floor(parseFloat(details.lengthOfX) * (70 / parseInt(details.frequency)) / parseInt(details.unitX)) * parseInt(details.unitX),
-      interval: parseFloat(details.unitX),
-      splitNumber: parseFloat(details.numOfUnitX)
+      max: (unitXTornado * numOfUnitXTornado),//Math.floor(parseFloat(details.lengthOfX) * (70 / parseInt(details.frequency)) / parseInt(details.unitX)) * parseInt(details.unitX),
+      interval: unitXTornado,//parseFloat(details.unitX),
+      splitNumber: numOfUnitXTornado//parseFloat(details.numOfUnitX)
 
     },
     yAxis: {
