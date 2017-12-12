@@ -61216,8 +61216,8 @@ var lang = {
         },
         dataZoom: {
             title: {
-                zoom: '区域缩放',
-                back: '区域缩放还原'
+                zoom: 'area zooming',//区域缩放
+                back: 'restore area zooming'//区域缩放还原
             }
         },
         magicType: {
@@ -61229,10 +61229,10 @@ var lang = {
             }
         },
         restore: {
-            title: '还原'
+            title: 'Restore'//还原
         },
         saveAsImage: {
-            title: '保存为图片',
+            title: 'Save as image',//保存为图片
             lang: ['右键另存为图片']
         }
     }
