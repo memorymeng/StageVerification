@@ -47,6 +47,12 @@
         right:0;
         }
 
+        .canvas {
+          background-image: url(./pic/Cover.png);
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+
     </style>
     <script>
         var BPD_TO_M3PD = 1 / 6.29;
@@ -841,7 +847,7 @@
 
   <!-- <div id = 'canvas'><div><br /> -->
   <!-- A4 210 x 297 -> 840 x 1188 -->
-  <div id='canvas' style="width: 1200px;height:700px;"></div><br />
+  <div id='canvas' class='canvas' style="width: 1200px;height:700px;"></div><br />
 
   Series : <select value='Series' name='series' id='series'>
       <?php
