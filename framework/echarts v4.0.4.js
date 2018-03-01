@@ -8577,7 +8577,7 @@ ZImage.prototype = {
         // Draw rect text
         if (style.text != null) {
             // Only restore transform when needs draw text.
-            this.restoreTransform(ctx);    
+            this.restoreTransform(ctx);
             this.drawRectText(ctx, this.getBoundingRect());
         }
     },
@@ -14024,7 +14024,7 @@ Path.prototype = {
         // Draw rect text
         if (style.text != null) {
             // Only restore transform when needs draw text.
-            this.restoreTransform(ctx);    
+            this.restoreTransform(ctx);
             this.drawRectText(ctx, this.getBoundingRect());
         }
     },
@@ -23075,8 +23075,8 @@ var lang = {
         },
         dataZoom: {
             title: {
-                zoom: '区域缩放',
-                back: '区域缩放还原'
+                zoom: 'Zoom',
+                back: 'Zoom Back'
             }
         },
         magicType: {
@@ -23088,10 +23088,10 @@ var lang = {
             }
         },
         restore: {
-            title: '还原'
+            title: 'Restore'
         },
         saveAsImage: {
-            title: '保存为图片',
+            title: 'Save as image',
             lang: ['右键另存为图片']
         }
     },
@@ -60898,10 +60898,10 @@ var sunburstLayout = function (seriesType, ecModel, api, payload) {
                     ? unitRadian : (value * unitRadian);
                 if (angle < minAngle) {
                     angle = minAngle;
-                    
+
                 }
                 else {
-                    
+
                 }
 
                 endAngle = startAngle + dir * angle;
