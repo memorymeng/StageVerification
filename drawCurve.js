@@ -377,7 +377,7 @@ function drawTornadoCurve(divId, details, mode) {
     dataBep.push([details.espPoints.BEP_Q * k, getValueAtPoint(details.espPoints.BEP_Q * k, coeHQk)]);
     dataMax.push([details.espPoints.BEA_End * k, getValueAtPoint(details.espPoints.BEA_End * k, coeHQk)]);
   }
-  //console.log(data[65]);
+  console.log(dataBep);
 
 
 
@@ -807,7 +807,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: 'min',
         type: 'line',
-        smooth: true,
+        smooth: false,
         showSymbol: false,
         symbolSize: 1,
         animationDuration: 3000,
@@ -845,7 +845,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: 'bep',
         type: 'line',
-        smooth: true,
+        smooth: false,
         showSymbol: false,
         symbolSize: 1,
         animationDuration: 2000,
@@ -883,7 +883,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: 'max',
         type: 'line',
-        smooth: true,
+        smooth: false,
         showSymbol: false,
         symbolSize: 1,
         animationDuration: 1500,

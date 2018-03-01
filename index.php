@@ -12,7 +12,7 @@
     <script src="./framework/jquery-3.2.1.js"></script>
     <script src="./framework/jquery-ui-1.12.1/jquery-ui.js"></script>
 
-    <script src='./framework/echarts v3.8.5.js'></script>
+    <script src='./framework/echarts v4.0.4.js'></script>
     <script src='./drawCurve.js?random=<?php echo filemtime('./drawCurve.js'); ?>'></script>
     <style type="text/css">
 
@@ -140,7 +140,8 @@
 
         function drawImages(mode) {
           console.log('about to start drawing');
-
+          $('#canvas').css("background-image","url()");//set background-image to blank when drawing cures
+          //document.getElementById('canvas').style.backgroundImage = 'url()';
 
           if('CATALOG' === mode)
           {
