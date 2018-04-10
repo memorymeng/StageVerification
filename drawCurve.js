@@ -181,7 +181,7 @@ function drawCatalogCurve(divId, details, mode) {
         type: 'line',
         xAxisIndex: 0,
         yAxisIndex: 0,
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         data: HQ,
         lineStyle: {
@@ -195,7 +195,7 @@ function drawCatalogCurve(divId, details, mode) {
         type: 'line',
         xAxisIndex: 0,
         yAxisIndex: 1,
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         data: PQ,
         lineStyle: {
@@ -209,7 +209,7 @@ function drawCatalogCurve(divId, details, mode) {
         type: 'line',
         xAxisIndex: 0,
         yAxisIndex: 2,
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         data: EQ,
         lineStyle: {
@@ -224,7 +224,7 @@ function drawCatalogCurve(divId, details, mode) {
         silent: true,
         xAxisIndex: 0,
         yAxisIndex: 0,
-        smooth: true,
+        //smooth: true,
         markArea: {
           silent: true,
           itemStyle: {
@@ -463,7 +463,7 @@ function drawTornadoCurve(divId, details, mode) {
     series: [{
         name: legend[0],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -503,7 +503,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[1],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -541,7 +541,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[2],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -579,7 +579,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[3],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -617,7 +617,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[4],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -655,7 +655,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[5],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -693,7 +693,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[6],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -731,7 +731,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[7],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -769,7 +769,7 @@ function drawTornadoCurve(divId, details, mode) {
       {
         name: legend[8],
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -1141,7 +1141,7 @@ function drawStageVerification(divId, details, mode) {
     series: [{
         name: 'Catalog Curve',
         type: 'EFF' === mode ? 'scatter' : 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 'EFF' === mode ? 10 : 1,
         lineStyle: {
@@ -1154,7 +1154,7 @@ function drawStageVerification(divId, details, mode) {
       {
         name: 'Lower Limit',
         type: 'EFF' === mode ? 'scatter' : 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: 'EFF' === mode ? true : false,
         symbolSize: 'EFF' === mode ? 10 : 1,
         lineStyle: {
@@ -1167,7 +1167,7 @@ function drawStageVerification(divId, details, mode) {
       {
         name: 'EFF' === mode ? '' : 'Upper Limit',
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -1180,7 +1180,7 @@ function drawStageVerification(divId, details, mode) {
       {
         name: 'Test Curve',
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -1206,7 +1206,7 @@ function drawStageVerification(divId, details, mode) {
       {
         name: 'Test Curve2',
         type: 'line',
-        smooth: true,
+        //smooth: true,
         showSymbol: false,
         symbolSize: 1,
         lineStyle: {
@@ -1233,7 +1233,7 @@ function drawStageVerification(divId, details, mode) {
         name: 'BEA & BEP',
         type: 'line',
         silent: true,
-        smooth: true,
+        //smooth: true,
         markArea: {
           silent: true,
           itemStyle: {
