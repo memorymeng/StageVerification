@@ -858,8 +858,8 @@
       ?>
   </select>
   <select name="frequency" id="frequency">
-    <option value="50">50Hz</option>
     <option value="60" selected>60Hz</option>
+    <option value="50">50Hz</option>
   </select>
 
   <br/>
@@ -886,18 +886,18 @@
     <div style="float:left;width:410px;">
       Test with Frequency
       <select id="testFrequency1">
-        <option value="50">50Hz</option>
-        <option value="60" selected>60Hz</option>
+        <option value="60" selected>60Hz &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(BPD - Feet - HP)</option>
+        <option value="50">50Hz (Cubic Meter - Meter - kW)</option>
       </select>
     </div>
     <div>
       Test with Frequency
       <select id="testFrequency2">
-        <option value="50">50Hz</option>
-        <option value="60" selected>60Hz</option>
+        <option value="60" selected>60Hz &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(BPD - Feet - HP)</option>
+        <option value="50">50Hz (Cubic Meter - Meter - kW)</option>
       </select>
     </div>
-    <textarea name="inputArea1" id='inputArea1' style="width:400px;height:200px;" placeholder="Excel Data From Client" ></textarea>
+    <textarea name="inputArea1" id='inputArea1' style="width:400px;height:200px;" placeholder="Excel Data From Supplier" ></textarea>
     <textarea name="inputArea2" id='inputArea2' style="width:400px;height:200px;" placeholder="Excel Data From Testbench" ></textarea>
   </div>
   <!-- <br />
