@@ -61,6 +61,8 @@
         var isAdmin = false;
         var catalogs = new Object();
         var details = new Object();
+        var testDataHeaderOD = new Object();
+        var testDataOD = new Object();
         var stageChange = false;
         var detailsIsLoaded = false;
         var isRequesting = false;
@@ -119,16 +121,235 @@
             $('#frequency').change(function () {
                 detailsIsLoaded = false;
                 //adjustInputData();
-                // $('#testFrequency1').val($('#frequency').val());
-                // $('#testFrequency2').val($('#frequency').val());
+                // $('#testHeader1').val($('#frequency').val());
+                // $('#testHeader2').val($('#frequency').val());
                 console.log('frequency changes, need reload details');
             });
 
-            //only for test, delete later
-            $('#inputArea1').val("39.66\t33.56\t0.259\n392.94\t34.31\t0.312\n767.93\t33.9\t0.384\n917.17\t33.45\t0.418\n1072.1\t32.1\t0.441\n1233.99\t28.29\t0.445\n1364.87\t24.83\t0.436\n1500.46\t20.15\t0.424\n1649.37\t14.28\t0.452\n1768.73\t9.86\t0.471\n2010.44\t0.14\t0.502");
-            //$('#excelData2').val("39.66\t33.56\t1.259\n392.94\t34.31\t1.312\n767.93\t33.9\t1.384\n917.17\t33.45\t1.418\n1072.1\t32.1\t1.441\n1233.99\t28.29\t1.445\n1364.87\t24.83\t1.436\n1500.46\t20.15\t1.424\n1649.37\t14.28\t1.452\n1768.73\t9.86\t1.471\n2010.44\t0.14\t1.502");
+            $('#testHeader2').change(function () {
+
+                if(-1 != $('#testHeader2').val().search("Excel")){
+                  //console.log('testHeader2 change to mannul mode');
+                }
+                else {
+                  $.ajax({
+                      type: 'POST',
+                      url: './RequestTestData.php',
+                      data: {
+                          id: $('#testHeader2').val(),
+                      },
+                      success: function (data) {
+                        console.log(data);
+                        var strData = "";
+                        for (var i = 0; i < data['numOfPoints']; i++) {
+                          strData += data['BPD'][i] + "\t" + data['Head'][i] + "\t" + data['BHP'][i] + "\n";
+                        }
+                        $('#inputArea2').val(strData);
+                      },
+                      error: function (request, status, error) {
+                        alert('Error in fetch OD test data from database');
+                        console.log(status);
+                        console.log(error);
+                        console.log(request.responseText);
+                      },
+                      dataType: 'json',
+                      async: true
+                  });
+                }
+            });
 
         });
+
+        $(function(){ // = $(document).ready(function() { ... });
+          $( "#loginDlg" ).dialog({
+              autoOpen: false,
+              resizable: false,
+              height: "auto",
+              width: 400,
+              modal: true,
+              buttons: {
+                "Login": function() {
+                  submitLoginForm();
+                },
+                Cancel: function() {
+                  $( this ).dialog( "close" );
+                }
+              }
+            });
+
+            $( "#createUserDlg" ).dialog({
+                autoOpen: false,
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                buttons: {
+                  "Create": function() {
+                    submitCreateUserForm();
+                   },
+                  Cancel: function() {
+                    $( this ).dialog( "close" );
+                  }
+                }
+              });
+
+            function submitLoginForm() {
+              $.ajax({
+                  type: 'POST',
+                  url: './PasswordVerification.php',
+                  data: {
+                      username: $('#username').val(),
+                      password: $('#password').val()
+                  },
+                  success: function (data) {
+                    console.log(data);
+
+                    $('#password').val('');
+                    if(false === data['userFind']) {
+                      //confirm('User Not Find, Please try again!');
+                      $( "#loginDlg" ).dialog('option','title','User Not Find, Please try again!');
+                    }
+                    else if(false === data['psw_verified']) {
+                      //confirm('Wrong Password, Please try again!');
+                      $( "#loginDlg" ).dialog('option','title','Wrong Password, Please try again!');
+                    }
+                    else {
+                      $('#loginDlg').dialog( "close" );
+                      confirm('Welcome back, ' + data['username']);
+                      //$( "#loginDlg" ).dialog('option','title','Creat New Users');
+
+                      if('administrator' === data['permission']) {
+                        isAdmin = true;
+                        $('#loginBtn').html('Create New User');
+                        getAdminPermission();
+                      }
+                      else {
+                        $('#loginBtn').html(data['username']);
+                        $('#loginBtn').button('disable');
+                      }
+                    }
+                  },
+                  error: function (request, status, error) {
+                    alert('Error in fetch user data from database');
+                    console.log(status);
+                    console.log(error);
+                    console.log(request.responseText);
+                  },
+                  dataType: 'json',
+                  async: true
+              });
+
+
+            }
+
+            function submitCreateUserForm() {
+              result = inputValidation();
+              if(true === result) {
+                $.ajax({
+                    type: 'POST',
+                    url: './CreateNewUser.php',
+                    data: {
+                        username: $('#username_new').val(),
+                        password: $('#password_new').val()
+                    },
+                    success: function (data) {
+                      console.log(data);
+                      if(true == data['success']) {
+                        confirm('Success : name#' + data['username'] + ' id#' + data['id'] + ' created');
+                        $('#username_new').val('');
+                        $('#password_new').val('');
+                        $('#password_new_repeat').val('');
+                      }
+                      else {
+                        confirm('Error: ' + data['error']);
+                      }
+
+                    },
+                    error: function (request, status, error) {
+                      alert('Error in fetch user data from database');
+                      console.log(status);
+                      console.log(error);
+                      console.log(request.responseText);
+                    },
+                    dataType: 'json',
+                    async: true
+                });
+              }
+              else {
+                $('#createUserDlg').dialog('option','title',result);
+              }
+            }
+
+            function inputValidation() {
+              result = true;
+              if('' == $('#username_new').val()) {
+                result = 'username cannot be blank';
+              }
+              else if($('#password_new').val() !== $('#password_new_repeat').val()) {
+                result = 'please keep the password same';
+              }
+              else if($('#username_new').val().length < 3) {
+                result = 'length of username cannot less than 3';
+              }
+              else if($('#password_new').val().length < 6) {
+                result = 'length of password cannot less than 6';
+              }
+
+              return result;
+
+            }
+
+            $( "#loginBtn" ).button().on( "click", function() {
+
+              {// for testing only, remove in production
+                getAdminPermission();
+                return;
+              }
+
+              if(false === isAdmin) {
+                $( "#loginDlg" ).dialog('option','title','Login');
+                $( "#loginDlg" ).dialog( "open" );
+              }
+              else if(true === isAdmin) {
+                $( "#createUserDlg" ).dialog('option','title','Create New User');
+                $( "#createUserDlg" ).dialog( "open" );
+              }
+
+            });
+
+              $("#username").keypress(function(event){
+                  if(event.keyCode == 13){//Enter Key
+                    submitLoginForm();
+                  }
+              });
+
+              $("#password").keypress(function(event){
+                  if(event.keyCode == 13) {//Enter Key
+                    submitLoginForm();
+                  }
+              });
+
+              $("#username_new").keypress(function(event){
+                  if(event.keyCode == 13){//Enter Key
+                    submitCreateUserForm();
+                  }
+              });
+
+              $("#password_new").keypress(function(event){
+                  if(event.keyCode == 13) {//Enter Key
+                    submitCreateUserForm();
+                  }
+              });
+
+              $("#password_new_repeat").keypress(function(event){
+                  if(event.keyCode == 13) {//Enter Key
+                    submitCreateUserForm();
+                  }
+              });
+
+
+
+          });
 
 
         function updateStages(seriesName) {
@@ -352,10 +573,13 @@
           adjustedTestP2 = originTestP2.slice();
 
           console.log('try adjust input data');
-          if($('#testFrequency1').val() != $('#frequency').val() && '' != $('#inputArea1').val().trim())
+          //console.log($('#testHeader1').val().slice(-2));
+          var testFrequeny1 = (-1 != $('#testHeader1').val().search('Excel'))?$('#testHeader1').val().slice(-2):'60';
+          var testFrequeny2 = (-1 != $('#testHeader2').val().search('Excel'))?$('#testHeader2').val().slice(-2):'60';
+          if(testFrequeny1 != $('#frequency').val() && '' != $('#inputArea1').val().trim())
           {
             console.log('adjust input data 1');
-            var k = $('#frequency').val() / $('#testFrequency1').val();
+            var k = $('#frequency').val() / testFrequeny1;
             for(var i=0;i<adjustedTestQ.length;i++)//frequency convertion
             {
               adjustedTestQ[i] *= Math.pow(k,1);
@@ -381,10 +605,10 @@
             }
           }
 
-          if($('#testFrequency2').val() != $('#frequency').val() && '' != $('#inputArea2').val().trim())
+          if(testFrequeny2 != $('#frequency').val() && '' != $('#inputArea2').val().trim())
           {
             console.log('adjust input data 2');
-            var k = $('#frequency').val() / $('#testFrequency2').val();
+            var k = $('#frequency').val() / testFrequeny2;
             for(var i=0;i<adjustedTestQ2.length;i++)//frequency convertion
             {
               adjustedTestQ2[i] *= Math.pow(k,1);
@@ -417,13 +641,13 @@
           console.log('preparing data for result table');
           correctedTestQ = [];
           correctedTestQ[0] = 0;
-          correctedTestQ[1] = parseFloat(details.espPoints.BEA_Start) / 2;
-          correctedTestQ[2] = parseFloat(details.espPoints.BEA_Start);
-          correctedTestQ[4] = (parseFloat(details.espPoints.BEA_Start) + parseFloat(details.espPoints.BEP_Q)) / 2;
+          correctedTestQ[1] = parseFloat(details.espPoints.BEP_Q) * 0.8 / 2;
+          correctedTestQ[2] = parseFloat(details.espPoints.BEP_Q) * 0.8;
+          correctedTestQ[4] = (parseFloat(details.espPoints.BEP_Q) * 0.8 + parseFloat(details.espPoints.BEP_Q)) / 2;
           correctedTestQ[6] = parseFloat(details.espPoints.BEP_Q);
-          correctedTestQ[8] = (parseFloat(details.espPoints.BEP_Q) + parseFloat(details.espPoints.BEA_End)) / 2;
-          correctedTestQ[10] = parseFloat(details.espPoints.BEA_End);
-          correctedTestQ[11] = (parseFloat(details.espPoints.BEA_End) + parseFloat(details.espPoints.domain_Q)) / 2;
+          correctedTestQ[8] = (parseFloat(details.espPoints.BEP_Q) + parseFloat(details.espPoints.BEP_Q) * 1.2) / 2;
+          correctedTestQ[10] = parseFloat(details.espPoints.BEP_Q) * 1.2;
+          correctedTestQ[11] = (parseFloat(details.espPoints.BEP_Q) * 1.2 + parseFloat(details.espPoints.domain_Q)) / 2;
           correctedTestQ[12] = parseFloat(details.espPoints.domain_Q);
 
           correctedTestQ[3] = (correctedTestQ[2] + correctedTestQ[4]) / 2;
@@ -614,196 +838,12 @@
         }
 
 
-
-        $(function(){
-          $( "#loginDlg" ).dialog({
-              autoOpen: false,
-              resizable: false,
-              height: "auto",
-              width: 400,
-              modal: true,
-              buttons: {
-                "Login": function() {
-                  submitLoginForm();
-                },
-                Cancel: function() {
-                  $( this ).dialog( "close" );
-                }
-              }
-            });
-
-            $( "#createUserDlg" ).dialog({
-                autoOpen: false,
-                resizable: false,
-                height: "auto",
-                width: 400,
-                modal: true,
-                buttons: {
-                  "Create": function() {
-                    submitCreateUserForm();
-                   },
-                  Cancel: function() {
-                    $( this ).dialog( "close" );
-                  }
-                }
-              });
-
-            function submitLoginForm() {
-              $.ajax({
-                  type: 'POST',
-                  url: './PasswordVerification.php',
-                  data: {
-                      username: $('#username').val(),
-                      password: $('#password').val()
-                  },
-                  success: function (data) {
-                    console.log(data);
-
-                    $('#password').val('');
-                    if(false === data['userFind']) {
-                      //confirm('User Not Find, Please try again!');
-                      $( "#loginDlg" ).dialog('option','title','User Not Find, Please try again!');
-                    }
-                    else if(false === data['psw_verified']) {
-                      //confirm('Wrong Password, Please try again!');
-                      $( "#loginDlg" ).dialog('option','title','Wrong Password, Please try again!');
-                    }
-                    else {
-                      $('#loginDlg').dialog( "close" );
-                      confirm('Welcome back, ' + data['username']);
-                      //$( "#loginDlg" ).dialog('option','title','Creat New Users');
-
-                      if('administrator' === data['permission']) {
-                        isAdmin = true;
-                        $('#loginBtn').html('Create New User');
-                        getAdminPermission();
-                      }
-                      else {
-                        $('#loginBtn').html(data['username']);
-                        $('#loginBtn').button('disable');
-                      }
-                    }
-                  },
-                  error: function (request, status, error) {
-                    alert('Error in fetch user data from database');
-                    console.log(status);
-                    console.log(error);
-                    console.log(request.responseText);
-                  },
-                  dataType: 'json',
-                  async: true
-              });
-
-
-            }
-
-            function submitCreateUserForm() {
-              result = inputValidation();
-              if(true === result) {
-                $.ajax({
-                    type: 'POST',
-                    url: './CreateNewUser.php',
-                    data: {
-                        username: $('#username_new').val(),
-                        password: $('#password_new').val()
-                    },
-                    success: function (data) {
-                      console.log(data);
-                      if(true == data['success']) {
-                        confirm('Success : name#' + data['username'] + ' id#' + data['id'] + ' created');
-                        $('#username_new').val('');
-                        $('#password_new').val('');
-                        $('#password_new_repeat').val('');
-                      }
-                      else {
-                        confirm('Error: ' + data['error']);
-                      }
-
-                    },
-                    error: function (request, status, error) {
-                      alert('Error in fetch user data from database');
-                      console.log(status);
-                      console.log(error);
-                      console.log(request.responseText);
-                    },
-                    dataType: 'json',
-                    async: true
-                });
-              }
-              else {
-                $('#createUserDlg').dialog('option','title',result);
-              }
-            }
-
-            function inputValidation() {
-              result = true;
-              if('' == $('#username_new').val()) {
-                result = 'username cannot be blank';
-              }
-              else if($('#password_new').val() !== $('#password_new_repeat').val()) {
-                result = 'please keep the password same';
-              }
-              else if($('#username_new').val().length < 3) {
-                result = 'length of username cannot less than 3';
-              }
-              else if($('#password_new').val().length < 6) {
-                result = 'length of password cannot less than 6';
-              }
-
-              return result;
-
-            }
-
-            $( "#loginBtn" ).button().on( "click", function() {
-              if(false === isAdmin) {
-                $( "#loginDlg" ).dialog('option','title','Login');
-                $( "#loginDlg" ).dialog( "open" );
-              }
-              else if(true === isAdmin) {
-                $( "#createUserDlg" ).dialog('option','title','Create New User');
-                $( "#createUserDlg" ).dialog( "open" );
-              }
-
-            });
-
-              $("#username").keypress(function(event){
-                  if(event.keyCode == 13){//Enter Key
-                    submitLoginForm();
-                  }
-              });
-
-              $("#password").keypress(function(event){
-                  if(event.keyCode == 13) {//Enter Key
-                    submitLoginForm();
-                  }
-              });
-
-              $("#username_new").keypress(function(event){
-                  if(event.keyCode == 13){//Enter Key
-                    submitCreateUserForm();
-                  }
-              });
-
-              $("#password_new").keypress(function(event){
-                  if(event.keyCode == 13) {//Enter Key
-                    submitCreateUserForm();
-                  }
-              });
-
-              $("#password_new_repeat").keypress(function(event){
-                  if(event.keyCode == 13) {//Enter Key
-                    submitCreateUserForm();
-                  }
-              });
-
-              function getAdminPermission() {
-                $('#HEAD').show();
-                $('#POWER').show();
-                $('#EFF').show();
-                $('#ToggleInputTable').show();
-              }
-
-          });
+        function getAdminPermission() {
+          $('#HEAD').show();
+          $('#POWER').show();
+          $('#EFF').show();
+          $('#ToggleInputTable').show();
+        }
 
     </script>
     <?php // onchange = 'updateStages(this.options[this.options.selectedIndex].value)'
@@ -823,6 +863,27 @@
     $json = json_encode($catalogs);
     //var_dump($json);
     echo "<script>catalogs = JSON.parse('{$json}');</script>";
+
+
+
+    require_once './model/ModelTestDataHeaderOD.php';
+    $results = ModelTestDataHeaderOD::fetchAllEsp();
+    //var_dump($results);
+    $testDataHeaderOD = [];
+    foreach ($results as $test) {
+      $header = [];
+      $header['TestID'] = $test->TestID;
+      $header['TestDateTime'] = $test->TestDateTime;
+      $header['SerialNumber'] = $test->SerialNumber;
+      $header['StageType'] = str_replace(' - OIL DYNAMICS','',$test->StageType);
+      $header['NumStages'] = $test->NumStages;
+      $header['BenchMode'] = $test->BenchMode;
+      array_push($testDataHeaderOD, $header);
+      //array_push($testDataHeaderOD, $test);
+    }
+    $json = json_encode($testDataHeaderOD);
+    //var_dump($json);
+    echo "<script>testDataHeaderOD = JSON.parse('{$json}');</script>";
     ?>
 
 
@@ -884,21 +945,27 @@
 
   <div id="inputArea" hidden>
     <div style="float:left;width:410px;">
-      Test with Frequency
-      <select id="testFrequency1">
-        <option value="60" selected>60Hz &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(BPD - Feet - HP)</option>
-        <option value="50">50Hz (Cubic Meter - Meter - kW)</option>
+      Test From Supplier
+      <select id="testHeader1">
+        <option value="Excel60" selected>From Excel (BPD - Feet - HP - 60Hz)</option>
+        <option value="Excel50">From Excel &nbsp;&nbsp;(M^3 - M - kW - 50Hz)</option>
       </select>
     </div>
     <div>
-      Test with Frequency
-      <select id="testFrequency2">
-        <option value="60" selected>60Hz &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(BPD - Feet - HP)</option>
-        <option value="50">50Hz (Cubic Meter - Meter - kW)</option>
+      Test From OD
+      <select id="testHeader2">
+        <option value="Excel60" selected>From Excel (BPD - Feet - HP - 60Hz)</option>
+        <option value="Excel50">From Excel &nbsp;&nbsp;(M^3 - M - kW - 50Hz)</option>
+        <?php
+        foreach ($testDataHeaderOD as $header) {
+            //echo "<option value='{$header['TestID']}'>{$header['SerialNumber']} --- {$header['TestDateTime']}</option>";
+            echo "<option value='{$header['TestID']}'>{$header['SerialNumber']} --- {$header['StageType']}</option>";
+        }
+        ?>
       </select>
     </div>
-    <textarea name="inputArea1" id='inputArea1' style="width:400px;height:200px;" placeholder="Excel Data From Supplier" ></textarea>
-    <textarea name="inputArea2" id='inputArea2' style="width:400px;height:200px;" placeholder="Excel Data From Testbench" ></textarea>
+    <textarea name="inputArea1" id='inputArea1' style="width:400px;height:200px;" placeholder="Copy Excel Data From Supplier" ></textarea>
+    <textarea name="inputArea2" id='inputArea2' style="width:400px;height:200px;" placeholder="Copy Excel Data From Testbench" ></textarea>
   </div>
   <!-- <br />
   <p>Table data will appear below</p> -->

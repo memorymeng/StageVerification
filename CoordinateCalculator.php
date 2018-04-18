@@ -126,16 +126,21 @@ class CoordinateCalculator
 
         if ('ESP' == $this->curveType) {
             $this->stepAdjust($lengthOfHQ, $unitHQ, $numOfUnitY, 'ADJUST_ALL');
-            $unitEQ = ($this->BEP_E / 0.6) / $numOfUnitY;
+            //$unitEQ = ($this->BEP_E / 0.8) / $numOfUnitY;
             $unitPQ = ($this->BEP_P / 0.25) / $numOfUnitY;
+            $emptyvalue = 0;
+            //$this->stepAdjust($emptyvalue, $unitEQ, $numOfUnitY, 'ADJUST_CORSTEP_ONLY');
+            $this->stepAdjust($emptyvalue, $unitPQ, $numOfUnitY, 'ADJUST_CORSTEP_ONLY');//CorNumer fixed, adjust corstep
 
-            $this->stepAdjust($lengthOfHQ, $unitEQ, $numOfUnitY, 'ADJUST_CORSTEP_ONLY');//CorNumer fixed, thus for the curve, maximum increase is 1.5,maximum decrease is 0.6
-            $this->stepAdjust($lengthOfHQ, $unitPQ, $numOfUnitY, 'ADJUST_CORSTEP_ONLY');//For BEP_E could be within 36% - 90% ,for BEP_P could be within 12% - 30%
+            $unitEQ = 10;
+            $lengthOfEQ = (ceil($this->BEP_E / 10) + 1) * 10;
+            if($lengthOfEQ > 100)
+              $lengthOfEQ = 100;
         }
         $this->lengthOfX = strval($lengthOfX);
         $this->lengthOfY1 = strval($lengthOfHQ);
         $this->lengthOfY2 = strval($unitPQ * $numOfUnitY);
-        $this->lengthOfY3 = strval($unitEQ * $numOfUnitY);
+        $this->lengthOfY3 = strval($lengthOfEQ);
         $this->numOfUnitX = strval($numOfUnitX);
         $this->numOfUnitY = strval($numOfUnitY);
         $this->unitX = strval($unitX);

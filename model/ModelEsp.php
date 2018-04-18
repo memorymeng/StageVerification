@@ -152,6 +152,7 @@ class ModelEsp extends ActiveRecordModel
     public static function fetchAll(): array
     {
         $db = new ModelEsp();
+        //$db = newInstance();
         $results = $db->where('series IS NOT NULL');
         $db = null;
         return $results;
@@ -164,6 +165,7 @@ class ModelEsp extends ActiveRecordModel
     public static function findId(int $id): ?ModelEsp
     {
         $db = new ModelEsp();
+        //$db = newInstance();
         $result = $db->find(strval($id));
         $db = null;
         return $result;
@@ -176,6 +178,7 @@ class ModelEsp extends ActiveRecordModel
     public static function findSeries(string $seriesName): array
     {
         $db = new ModelEsp();
+        //$db = newInstance();
         $results = $db->where("series = '{$seriesName}'");
         $db = null;
         return $results;
@@ -188,6 +191,7 @@ class ModelEsp extends ActiveRecordModel
     public static function findStage(string $stageName): ?ModelEsp
     {
         $db = new ModelEsp();
+        //$db = newInstance();
         $results = $db->where("model_od = '{$stageName}' ORDER BY edit_date desc");
         $result = null;
         if (empty($results)) {

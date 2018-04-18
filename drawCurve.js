@@ -165,7 +165,7 @@ function drawCatalogCurve(divId, details, mode) {
         min: 0,
         max: parseFloat(details.lengthOfY3),
         interval: parseFloat(details.unitY3),
-        splitNumber: parseFloat(details.numOfUnitY),
+        //splitNumber: parseFloat(details.numOfUnitY),
         position: 'right',
         offset: 80,
         axisLine: {
@@ -173,6 +173,9 @@ function drawCatalogCurve(divId, details, mode) {
           lineStyle: {
             color: colors[2]
           }
+        },
+        splitLine: {
+          show: false
         }
       }
     ],
@@ -1130,13 +1133,14 @@ function drawStageVerification(divId, details, mode) {
       nameLocation: 'end',
       //splitNumber: 10,
       min: 0,
-      interval: parseFloat(details.unitY1),
-      splitNumber: parseFloat(details.numOfUnitY)
-      // axisLine: {
-      //   lineStyle: {
-      //     color: ('HEAD' === mode ? 'blue' : ('POWER' === mode ? 'red' : 'EFF' === mode ? 'green' : 'black'))
-      //   }
-      // }
+      max: ('HEAD' === mode ? parseFloat(details.lengthOfY1) : ('POWER' === mode ? parseFloat(details.lengthOfY2)/2 : 'EFF' === mode ? parseFloat(details.lengthOfY3) : null)),
+      interval: ('HEAD' === mode ? parseFloat(details.unitY1) : ('POWER' === mode ? parseFloat(details.unitY2)/2 : 'EFF' === mode ? parseFloat(details.unitY3) : 'default')),
+      splitNumber: parseFloat(details.numOfUnitY),
+      axisLine: {
+        lineStyle: {
+          color: ('HEAD' === mode ? 'blue' : ('POWER' === mode ? 'red' : 'EFF' === mode ? 'green' : 'black'))
+        }
+      }
     },
     series: [{
         name: 'Catalog Curve',
@@ -1233,6 +1237,8 @@ function drawStageVerification(divId, details, mode) {
         name: 'BEA & BEP',
         type: 'line',
         silent: true,
+        xAxisIndex: 0,
+        yAxisIndex: 0,
         //smooth: true,
         markArea: {
           silent: true,
@@ -1257,12 +1263,26 @@ function drawStageVerification(divId, details, mode) {
           symbolSize: 1,
           label: {
             normal: {
-              formatter: 'BEP'
+              formatter: function(params) {
+                //console.log(params);
+                var indicator = params.data.name;
+                return indicator;
+              }
             }
           },
           data: [{
-            xAxis: details.espPoints.BEP_Q
-          }]
+              name: 'BEP',
+              xAxis: details.espPoints.BEP_Q
+            },
+            {
+              name: 'API_MIN',
+              xAxis: details.espPoints.BEP_Q * 0.8
+            },
+            {
+              name: 'API_MAX',
+              xAxis: details.espPoints.BEP_Q * 1.2
+            }
+          ]
         }
 
       }
@@ -1286,7 +1306,7 @@ function formatIndicator(params, mode) {
   var eff;
 
   if (params[0].data[0] >= details.espPoints.BEA_Start && params[0].data[0] <= details.espPoints.BEA_End) {
-    if (params.length < 1)
+    if (params.length < 3)
       return;
 
     params.forEach(function(element) {
@@ -1329,6 +1349,7 @@ function formatIndicator(params, mode) {
         indicator += lowerLimit.seriesName + ' : ' + lowerLimit.data[1].toFixed(2) + '<br/>';
         break;
       case 'POWER':
+      //console.log(params);
         indicator += 'Supplier HP : ' + (isset(testCurve) ? testCurve.data[1].toFixed(3) : 'NA') + '<br/>';
         indicator += 'TestBench HP : ' + (isset(testCurve2) ? testCurve2.data[1].toFixed(3) : 'NA') + '<br/>';
         indicator += upperLimit.seriesName + ' : ' + upperLimit.data[1].toFixed(3) + '<br/>';

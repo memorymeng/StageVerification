@@ -30,6 +30,7 @@ class ModelUser extends ActiveRecordModel
         $user = changeKeyName($user, 'pswd', 'password');
 
         $db = new ModelUser();
+        //$db = newInstance();
 
         return $db->insert($user);
     }
@@ -55,6 +56,7 @@ class ModelUser extends ActiveRecordModel
     public static function fetchAll(): array
     {
         $db = new ModelUser();
+        //$db = newInstance();
         $results = $db->where('USRNAME IS NOT NULL');
         $db = null;
         return $results;
@@ -67,6 +69,7 @@ class ModelUser extends ActiveRecordModel
     public static function findId(int $id): ?ModelUser
     {
         $db = new ModelUser();
+        //$db = newInstance();
         $result = $db->find(strval($id));
         $db = null;
         return $result;
@@ -79,6 +82,7 @@ class ModelUser extends ActiveRecordModel
     public static function findUserByName(string $username): ?ModelUser
     {
         $db = new ModelUser();
+        //$db = newInstance();
         $results = $db->where("USRNAME = '{$username}'");
         $result = null;
         if (empty($results)) {
