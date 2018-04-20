@@ -37,9 +37,9 @@
             text-align: center;
         }
 
-        .yellow {
+        /* .yellow {
           background-color: yellow;
-        }
+        } */
 
         #loginBtn {
         position:absolute;
@@ -733,7 +733,7 @@
           if('' != $('#inputArea1').val().trim())
           {
             var table = $('<table>');
-            table.append('<tr><th colspan="4">Test curve from Supplier</th><th colspan="5">API limits</th><th colspan="3">Test result</th></tr>');
+            table.append('<tr><th colspan="4">Test data from Supplier</th><th colspan="5">API limits</th><th colspan="3">Test result</th></tr>');
             if(60 == $('#frequency').val())
               table.append('<tr><th>Q(bpd)</th><th>H(ft)</th><th>P(hp)</th><th>E(%)</th><th>TDH(+5%)</th><th>TDH(-5%)</th><th>POWER(+8%)</th><th>POWER(-8%)</th><th>EFF(-10%)</th><th>TDH</th><th>POWER</th><th>EFFICIENCY</th></tr>');//labels
             else if(50 == $('#frequency').val())
@@ -741,7 +741,7 @@
             for (var i = 0; i < correctedTestQ.length; i++) {
               var row;
               if(2==i || 6==i || 10==i) {
-                row = $('<tr class="yellow">');
+                row = $('<tr bgcolor="yellow">');
               }
               else {
                 row = $('<tr>');
@@ -755,9 +755,28 @@
               row.append('<td>' + (('' != APItestPU[i])?APItestPU[i].toFixed(3):'') + '</td>');
               row.append('<td>' + (('' != APItestPL[i])?APItestPL[i].toFixed(3):'') + '</td>');
               row.append('<td>' + (('' != APItestEL[i])?APItestEL[i].toFixed(2):'') + '</td>');
-              row.append('<td>' + testResultH[i] + '</td>');
-              row.append('<td>' + testResultP[i] + '</td>');
-              row.append('<td>' + testResultE[i] + '</td>');
+              if('FAIL' === testResultH[i]) {
+                row.append('<td style="color:red;font-weight: bold">' + testResultH[i] + '</td>');
+              }
+              else {
+                row.append('<td style="color:green">' + testResultH[i] + '</td>');
+              }
+              if('FAIL' === testResultP[i]) {
+                row.append('<td style="color:red;font-weight: bold">' + testResultP[i] + '</td>');
+              }
+              else {
+                row.append('<td style="color:green">' + testResultP[i] + '</td>');
+              }
+              if('FAIL' === testResultE[i]) {
+                row.append('<td style="color:red;font-weight: bold">' + testResultE[i] + '</td>');
+              }
+              else {
+                row.append('<td style="color:green">' + testResultE[i] + '</td>');
+              }
+
+              // row.append('<td>' + testResultH[i] + '</td>');
+              // row.append('<td>' + testResultP[i] + '</td>');
+              // row.append('<td>' + testResultE[i] + '</td>');
               row.append('</tr>');
               table.append(row);
             }
@@ -768,7 +787,7 @@
           if('' != $('#inputArea2').val().trim())
           {
             var table = $('<table>');
-            table.append('<tr><th colspan="4">Test curve from TestBench</th><th colspan="5">API limits</th><th colspan="3">Test result</th></tr>');
+            table.append('<tr><th colspan="4">Test data from TestBench</th><th colspan="5">API limits</th><th colspan="3">Test result</th></tr>');
             if(60 == $('#frequency').val())
               table.append('<tr><th>Q(bpd)</th><th>H(ft)</th><th>P(hp)</th><th>E(%)</th><th>TDH(+5%)</th><th>TDH(-5%)</th><th>POWER(+8%)</th><th>POWER(-8%)</th><th>EFF(-10%)</th><th>TDH</th><th>POWER</th><th>EFFICIENCY</th></tr>');//labels
             else if(50 == $('#frequency').val())
@@ -776,7 +795,7 @@
             for (var i = 0; i < correctedTestQ.length; i++) {
               var row;
               if(2==i || 6==i || 10==i) {
-                row = $('<tr class="yellow">');
+                row = $('<tr bgcolor="yellow">');
               }
               else {
                 row = $('<tr>');
@@ -790,9 +809,27 @@
               row.append('<td>' + (('' != APItestPU[i])?APItestPU[i].toFixed(3):'') + '</td>');
               row.append('<td>' + (('' != APItestPL[i])?APItestPL[i].toFixed(3):'') + '</td>');
               row.append('<td>' + (('' != APItestEL[i])?APItestEL[i].toFixed(2):'') + '</td>');
-              row.append('<td>' + testResultH2[i] + '</td>');
-              row.append('<td>' + testResultP2[i] + '</td>');
-              row.append('<td>' + testResultE2[i] + '</td>');
+              if('FAIL' === testResultH2[i]) {
+                row.append('<td style="color:red;font-weight: bold">' + testResultH2[i] + '</td>');
+              }
+              else {
+                row.append('<td style="color:green">' + testResultH2[i] + '</td>');
+              }
+              if('FAIL' === testResultP2[i]) {
+                row.append('<td style="color:red;font-weight: bold">' + testResultP2[i] + '</td>');
+              }
+              else {
+                row.append('<td style="color:green">' + testResultP2[i] + '</td>');
+              }
+              if('FAIL' === testResultE2[i]) {
+                row.append('<td style="color:red;font-weight: bold">' + testResultE2[i] + '</td>');
+              }
+              else {
+                row.append('<td style="color:green">' + testResultE2[i] + '</td>');
+              }
+              // row.append('<td>' + testResultH2[i] + '</td>');
+              // row.append('<td>' + testResultP2[i] + '</td>');
+              // row.append('<td>' + testResultE2[i] + '</td>');
               row.append('</tr>');
               table.append(row);
             }

@@ -1010,7 +1010,7 @@ function drawStageVerification(divId, details, mode) {
       [details.espPoints.BEP_Q, details.espPoints.BEP_E * 0.9]
     ];
     upperLimit = [];
-    legend = ['Catalog Curve', 'Lower Limit', 'Test Curve', 'Test Curve2'];
+    legend = ['Catalog Curve', 'Lower Limit', 'Supplier Curve', 'OD Curve'];
 
   } else {
     for (var i = 0.0; i < details.espPoints.domain_Q; i += flowStep) {
@@ -1051,7 +1051,7 @@ function drawStageVerification(divId, details, mode) {
       }
 
     }
-    legend = ['Catalog Curve', 'Lower Limit', 'Upper Limit', 'Test Curve', 'Test Points', 'Test Curve2', 'Test Points2'];
+    legend = ['Catalog Curve', 'Lower Limit', 'Upper Limit', 'Supplier Curve', 'Supplier Points', 'OD Curve', 'OD Points'];
   }
 
 
@@ -1182,7 +1182,7 @@ function drawStageVerification(divId, details, mode) {
         data: upperLimit
       },
       {
-        name: 'Test Curve',
+        name: 'Supplier Curve',
         type: 'line',
         //smooth: true,
         showSymbol: false,
@@ -1196,7 +1196,7 @@ function drawStageVerification(divId, details, mode) {
         data: testCurve
       },
       {
-        name: 'EFF' === mode ? '' : 'Test Points',
+        name: 'EFF' === mode ? '' : 'Supplier Points',
         type: 'scatter',
         //silent: true,
         symbolSize: 7,
@@ -1208,7 +1208,7 @@ function drawStageVerification(divId, details, mode) {
         data: testPoints
       },
       {
-        name: 'Test Curve2',
+        name: 'OD Curve',
         type: 'line',
         //smooth: true,
         showSymbol: false,
@@ -1222,7 +1222,7 @@ function drawStageVerification(divId, details, mode) {
         data: testCurve2
       },
       {
-        name: 'EFF' === mode ? '' : 'Test Points2',
+        name: 'EFF' === mode ? '' : 'OD Points',
         type: 'scatter',
         //silent: true,
         symbolSize: 7,
@@ -1343,7 +1343,7 @@ function formatIndicator(params, mode) {
         break;
       case 'HEAD':
         indicator += 'Supplier Head : ' + (isset(testCurve) ? testCurve.data[1].toFixed(2) : 'NA') + '<br/>';
-        indicator += 'TestBench Head : ' + (isset(testCurve2) ? testCurve2.data[1].toFixed(2) : 'NA') + '<br/>';
+        indicator += 'OD Head : ' + (isset(testCurve2) ? testCurve2.data[1].toFixed(2) : 'NA') + '<br/>';
         indicator += upperLimit.seriesName + ' : ' + upperLimit.data[1].toFixed(2) + '<br/>';
         indicator += catalogCurve.seriesName + ' : ' + catalogCurve.data[1].toFixed(2) + '<br/>';
         indicator += lowerLimit.seriesName + ' : ' + lowerLimit.data[1].toFixed(2) + '<br/>';
@@ -1351,14 +1351,14 @@ function formatIndicator(params, mode) {
       case 'POWER':
       //console.log(params);
         indicator += 'Supplier HP : ' + (isset(testCurve) ? testCurve.data[1].toFixed(3) : 'NA') + '<br/>';
-        indicator += 'TestBench HP : ' + (isset(testCurve2) ? testCurve2.data[1].toFixed(3) : 'NA') + '<br/>';
+        indicator += 'OD HP : ' + (isset(testCurve2) ? testCurve2.data[1].toFixed(3) : 'NA') + '<br/>';
         indicator += upperLimit.seriesName + ' : ' + upperLimit.data[1].toFixed(3) + '<br/>';
         indicator += catalogCurve.seriesName + ' : ' + catalogCurve.data[1].toFixed(3) + '<br/>';
         indicator += lowerLimit.seriesName + ' : ' + lowerLimit.data[1].toFixed(3) + '<br/>';
         break;
       case 'EFF':
         indicator += 'Supplier EFF : ' + (isset(testCurve) ? testCurve.data[1].toFixed(3) : 'NA') + '<br/>';
-        indicator += 'TestBench EFF : ' + (isset(testCurve2) ? testCurve2.data[1].toFixed(3) : 'NA') + '<br/>';
+        indicator += 'OD EFF : ' + (isset(testCurve2) ? testCurve2.data[1].toFixed(3) : 'NA') + '<br/>';
         break;
       default:
         indicator += 'indicator error';
