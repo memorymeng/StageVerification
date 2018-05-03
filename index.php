@@ -571,7 +571,6 @@
           adjustedTestQ2 = originTestQ2.slice();
           adjustedTestH2 = originTestH2.slice();
           adjustedTestP2 = originTestP2.slice();
-
           console.log('try adjust input data');
           //console.log($('#testHeader1').val().slice(-2));
           var testFrequeny1 = (-1 != $('#testHeader1').val().search('Excel'))?$('#testHeader1').val().slice(-2):'60';
@@ -783,6 +782,9 @@
             table.append('</table>');
             $('#excelTable').html(table);
           }
+          else {
+            $('#excelTable').html('');
+          }
 
           if('' != $('#inputArea2').val().trim())
           {
@@ -836,6 +838,9 @@
             table.append('</table>');
             $('#excelTable2').html(table);
           }
+          else {
+            $('#excelTable2').html('');
+          }
 
 
           $('#inputArea').hide();
@@ -859,6 +864,7 @@
           //details.originTestE2 = originTestE2;
           details.testCoeHQ2 = testCoeHQ2;
           details.testCoePQ2 = testCoePQ2;
+
         }
 
         function getValueAtPoint(flowPoint, withCoe) {
