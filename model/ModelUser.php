@@ -14,7 +14,7 @@ require_once 'ActiveRecordModel.php';
 class ModelUser extends ActiveRecordModel
 {
     protected $table_name = 'user';
-    protected $username = 'Ray_Meng';//reminder: change to a readonly account in production!
+    protected $username = 'ray_meng';//reminder: change to a readonly account in production!
     protected $password = 'ODray01062017';
     protected $hostname = 'localhost';
     protected $dbname = 'myDB';

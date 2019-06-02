@@ -19,7 +19,7 @@ require_once 'ActiveRecordModel.php';
 class ModelTestDataOD extends ActiveRecordModel
 {
     protected $table_name = 'testdata_od';
-    protected $username = 'Ray_Meng';//reminder: change to a readonly account in production!
+    protected $username = 'ray_meng';//reminder: change to a readonly account in production!
     protected $password = 'ODray01062017';
     protected $hostname = 'localhost';
     protected $dbname = 'myDB';

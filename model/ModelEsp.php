@@ -26,7 +26,7 @@ define('HP_TO_KW', (0.745699872), true);
 class ModelEsp extends ActiveRecordModel
 {
     protected $table_name = 'mysql_od';
-    protected $username = 'Ray_Meng';//reminder: change to a readonly account in production!
+    protected $username = 'ray_meng';//reminder: change to a readonly account in production!
     protected $password = 'ODray01062017';
     protected $hostname = 'localhost';
     protected $dbname = 'myDB';

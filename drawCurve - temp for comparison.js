@@ -15,7 +15,7 @@ function drawCatalogCurve(divId, details, mode) {
   var HQ = [];
   var PQ = [];
   var EQ = [];
-  var legend = ['Head', 'HP', 'Eff'];
+  var legend = ['Head', 'HP', 'Eff', 'Head-SF950G', 'HP-SF950G', 'Eff-SF950G'];
   var axisName = [];
   var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
   imageFileName = details.stage + '_Catalog_' + details.frequency + 'Hz';
@@ -49,6 +49,28 @@ function drawCatalogCurve(divId, details, mode) {
     EQ.push([i, valueE]);
   }
 
+   var HQ2 = [];
+  var PQ2 = [];
+  var EQ2 = [];
+  var coeHQ2 = [31.71237,0.06159959,-0.0002678179,0.0000004078611,-0.0000000002736532,6.477285E-14];
+  var coePQ2 = [0.2300045,-0.00001727959,0.0000005420951,-0.0000000008351832,4.844196E-13,-9.48029E-17];
+  for (var i = 0.0; i < details.espPoints.domain_Q; i += flowStep) {
+    var valueH2 = 0;
+    var valueP2 = 0;
+    var valueE2 = 0;
+    for (var j = 0; j < parseInt(details.powN) + 1; j++) {
+      valueH2 += coeHQ2[j] * Math.pow(i, j);
+      valueP2 += coePQ2[j] * Math.pow(i, j);
+    }
+    valueE2 = (i * valueH2 * 100) / (135788 * valueP2);
+    if (50 == details.frequency) {
+      valueE2 *= HP_TO_KW / (BPD_TO_M3PD * FEET_TO_METER);
+    }
+
+    HQ2.push([i, valueH2]);
+    PQ2.push([i, valueP2]);
+    EQ2.push([i, valueE2]);
+  }
 
   option = {
     graphic: { // Position the image at the bottom center of its container.
@@ -63,7 +85,7 @@ function drawCatalogCurve(divId, details, mode) {
       }
     },
     title: {
-      text: 'Pump Performance Curve for ' + details.stage,
+      text: 'Pump Performance Curve for ' + details.stage + ' VS SF950G',
       subtext: 'Single Speed, 1 Stages, ' + details.frequency + ' Hz, ' + ((50 == details.frequency) ? 2917 : 3500) + ' RPM, SG = 1.00',
       left: 'center',
       top: '10',
@@ -222,6 +244,51 @@ function drawCatalogCurve(divId, details, mode) {
         }
       },
       {
+        name: legend[3],
+        type: 'line',
+        xAxisIndex: 0,
+        yAxisIndex: 0,
+        //smooth: true,
+        showSymbol: false,
+        data: HQ2,
+        lineStyle: {
+          normal: {
+            color: colors[0],
+            type: 'dashed'
+          }
+        }
+      },
+      {
+        name: legend[4],
+        type: 'line',
+        xAxisIndex: 0,
+        yAxisIndex: 1,
+        //smooth: true,
+        showSymbol: false,
+        data: PQ2,
+        lineStyle: {
+          normal: {
+            color: colors[1],
+            type: 'dashed'
+          }
+        }
+      },
+      {
+        name: legend[5],
+        type: 'line',
+        xAxisIndex: 0,
+        yAxisIndex: 2,
+        //smooth: true,
+        showSymbol: false,
+        data: EQ2,
+        lineStyle: {
+          normal: {
+            color: colors[2],
+            type: 'dashed'
+          }
+        }
+      },
+      {
         name: 'BEA & BEP',
         type: 'line',
         silent: true,
@@ -334,7 +401,7 @@ function drawTornadoCurve(divId, details, mode) {
   var legend = ['70Hz', '65Hz', '60Hz', '55Hz', '50Hz', '45Hz', '40Hz', '35Hz', '30Hz'];
   var axisName = [];
   var flowStep = ((details.espPoints.domain_Q >= 20000) ? 100 : ((details.espPoints.domain_Q >= 2000) ? 10 : 1));
-  imageFileName = details.stage + '_Tornado_' + ((details.frequency == 50)?'Matric':((details.frequency == 60)?'Imperial':'error'));
+  imageFileName = details.stage + '_Tornado_' + ((details.frequency == 50)?'Matrix':((details.frequency == 60)?'Imperial':'error'));
   var numOfUnitXTornado = parseInt(details.numOfUnitX);
   var unitXTornado = parseInt(details.unitX);
   {//adjust unit step for 70 hz curve
@@ -380,7 +447,7 @@ function drawTornadoCurve(divId, details, mode) {
     dataBep.push([details.espPoints.BEP_Q * k, getValueAtPoint(details.espPoints.BEP_Q * k, coeHQk)]);
     dataMax.push([details.espPoints.BEA_End * k, getValueAtPoint(details.espPoints.BEA_End * k, coeHQk)]);
   }
-  //console.log(dataBep);
+  console.log(dataBep);
 
 
 
@@ -423,7 +490,7 @@ function drawTornadoCurve(divId, details, mode) {
         },
         saveAsImage: {
           show: true,
-          name: details.stage + '_Tornado_' + ((details.frequency == 50)?'Matric':((details.frequency == 60)?'Imperial':'error'))//'Tornado Curve For ' + details.stage
+          name: details.stage + '_Tornado_' + ((details.frequency == 50)?'Matrix':((details.frequency == 60)?'Imperial':'error'))//'Tornado Curve For ' + details.stage
         }
       }
     },
@@ -457,7 +524,6 @@ function drawTornadoCurve(divId, details, mode) {
       nameLocation: 'end',
       splitNumber: 10,
       min: 0,
-      //max: 15,
       axisLine: {
         lineStyle: {
           color: 'blue'
@@ -483,9 +549,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(70)//data[70][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,70)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -526,9 +589,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(65)//data[65][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,65)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -567,9 +627,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(60)//data[60][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,60)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -608,9 +665,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(55)//data[55][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,55)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -649,9 +703,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(50)//data[50][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,50)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -690,9 +741,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(45)//data[45][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,45)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -731,9 +779,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(40)//data[40][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,40)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -772,9 +817,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(35)//data[35][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,35)
-            // name: 'maximum',
-            // type: 'max'
           }],
           label: {
             normal: {
@@ -813,9 +855,6 @@ function drawTornadoCurve(divId, details, mode) {
           symbolOffset: [0, 0],
           data: [{
             coord: getBepCoordForFreq(30)//data[30][details.unitX/flowStep]
-            //coord: getCoordAtPointForFreq(unitXTornado,30)
-            //name: 'maximum',
-            //type: 'max'
           }],
           label: {
             normal: {
@@ -1419,12 +1458,6 @@ function getBepCoordForFreq(freq) {
   var x = details.espPoints.BEP_Q * k;
   var y = getValueAtPoint(details.espPoints.BEP_Q * k, coeHQk);
 
-  return [x,y];
-}
-
-function getCoordAtPointForFreq(x,freq) {
-  var k = freq / parseInt(details.frequency);
-  var y = getValueAtPoint(x/k,details.coeHQ)*Math.pow(k,2);
   return [x,y];
 }
 

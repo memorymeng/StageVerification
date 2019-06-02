@@ -789,7 +789,7 @@
           if('' != $('#inputArea2').val().trim())
           {
             var table = $('<table>');
-            table.append('<tr><th colspan="4">Test data from TestBench</th><th colspan="5">API limits</th><th colspan="3">Test result</th></tr>');
+            table.append('<tr><th colspan="4">Test data from OD</th><th colspan="5">API limits</th><th colspan="3">Test result</th></tr>');
             if(60 == $('#frequency').val())
               table.append('<tr><th>Q(bpd)</th><th>H(ft)</th><th>P(hp)</th><th>E(%)</th><th>TDH(+5%)</th><th>TDH(-5%)</th><th>POWER(+8%)</th><th>POWER(-8%)</th><th>EFF(-10%)</th><th>TDH</th><th>POWER</th><th>EFFICIENCY</th></tr>');//labels
             else if(50 == $('#frequency').val())
@@ -888,6 +888,10 @@
           $('#ToggleInputTable').show();
         }
 
+        function changeFreq() {
+          // $('#frequency').val($('#frequencyEdition').val());
+          // details.frequency = $('#frequency').val();
+        }
     </script>
     <?php // onchange = 'updateStages(this.options[this.options.selectedIndex].value)'
     require_once './model/ModelEsp.php';
@@ -1016,6 +1020,9 @@
   <div id="excelTable"></div><br />
   <div id="excelTable2"></div>
   <button name="save" onClick="saveEChartImage('canvas')" accesskey="s" hidden>saveImage</button>
+
+  <input type="text" id="frequencyEdition" name="frequencyEdition" placeholder="Frequency">
+  <button name="changeFreq" onclick="changeFreq()">set</button>
 </body>
 </html>
 <script>
